@@ -1,0 +1,24 @@
+{
+  "name": "mtg-log-backend",
+  "version": "1.0.0",
+  "description": "Backend for mtg-log",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tlaukka/mtg-log-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tlaukka/mtg-log-backend/issues"
+  },
+  "homepage": "https://github.com/tlaukka/mtg-log-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
