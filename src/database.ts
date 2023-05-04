@@ -1,16 +1,16 @@
-import { MongoClient } from 'mongodb'
+import mongoose from 'mongoose'
 
-const client = new MongoClient('mongodb://localhost:27017')
-
-async function connect () {
-  await client.connect()
-  console.log('---- CONNECT ----')
-
-  return '- DONE -'
+async function init () {
+  try {
+    await mongoose.connect('mongodb://localhost:27017')
+    console.log('---- DB CONNECT ----')
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const db = {
-  connect
+  init
 }
 
 export default db
