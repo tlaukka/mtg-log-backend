@@ -1,5 +1,6 @@
 import express from 'express'
-import db from './database'
+import db from './database.mjs'
+import mongoose, { Schema } from 'mongoose'
 
 const app = express()
 
@@ -12,5 +13,12 @@ app.listen(3000, async () => {
 
 app.get('/test', (req, res) => {
   console.log('GET /test')
-  res.send('TEST GET')
+  res.send('TEST GETs')
 })
+
+const CardSchema = new Schema({
+  id: String,
+  name: String
+})
+
+const Card = mongoose.model('Card', CardSchema)

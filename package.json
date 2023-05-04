@@ -2,9 +2,9 @@
   "name": "mtg-log-backend",
   "version": "1.0.0",
   "description": "Backend for mtg-log",
-  "main": "index.js",
+  "main": "src/index.mjs",
   "scripts": {
-    "start": "npx nodemon",
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,11 +22,5 @@
     "mongodb": "^5.3.0",
     "mongoose": "^7.1.0",
     "nodemon": "^2.0.22"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.17",
-    "@types/node": "^18.16.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.4"
   }
 }
