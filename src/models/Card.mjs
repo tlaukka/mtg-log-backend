@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose'
 
 const cardSchema = new Schema({
-  id: String,
+  _id: String,
   name: String,
   image_uris: {
     small: String,
@@ -17,6 +17,14 @@ const cardSchema = new Schema({
   meta: {
     grade: String,
     price: Number
+  }
+}, {
+  virtuals: {
+    id: {
+      get () {
+        return this._id
+      }
+    }
   }
 })
 
