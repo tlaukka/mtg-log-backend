@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import { Schema, model } from 'mongoose'
 
 const cardSchema = new Schema({
   _id: String,
@@ -28,7 +28,7 @@ const cardSchema = new Schema({
   }
 })
 
-const Card = mongoose.model('Card', cardSchema)
+const Card = model('Card', cardSchema)
 
 export default Card
 
