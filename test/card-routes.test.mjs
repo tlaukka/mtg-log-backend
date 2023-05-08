@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import app from '../index.mjs'
 import { expect } from 'chai'
-import Card from '../models/Card.mjs'
+import Card from '../models/card.mjs'
 
 let mongoServer
 
@@ -48,7 +48,7 @@ describe('Route tests', () => {
     const card = await createCard()
 
     await supertest(app)
-      .get('/api/cards')
+      .get('/cards')
       .expect(200)
       .then((response) => {
         expect(response.body).to.be.an('array')

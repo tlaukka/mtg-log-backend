@@ -1,11 +1,11 @@
 import express from 'express'
 import db from './database.mjs'
-import router from './routes.mjs'
+import cardRouter from './routes/card-routes.mjs'
 
 const app = express()
 
 app.use(express.json())
-app.use('/api', router)
+app.use('/cards', cardRouter)
 
 app.listen(3000, async () => {
   await db.init()
