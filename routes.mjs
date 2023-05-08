@@ -47,3 +47,5 @@ router.delete('/cards/:id', async (req, res) => {
     res.status(400).json({ error: error.message })
   }
 })
+
+export default router
