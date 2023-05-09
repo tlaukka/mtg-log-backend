@@ -1,4 +1,4 @@
-import cardService from "../services/card-service.mjs"
+import cardService from '../services/card-service.mjs'
 
 async function getCards (_, res) {
   try {

@@ -20,7 +20,6 @@ async function deleteCard (id) {
   return Card.findByIdAndDelete(id).exec()
 }
 
-
 const cardService = {
   getCards,
   getCard,
