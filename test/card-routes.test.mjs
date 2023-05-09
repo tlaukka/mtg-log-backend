@@ -7,10 +7,10 @@ import Card from '../models/card.mjs'
 
 let mongoServer
 
-async function createCard () {
-  const card = await Card.create({
-    _id: 'testcard01',
-    name: 'Test Card 01',
+function getCardData (id) {
+  return {
+    _id: id,
+    name: `Test Card ${id}`,
     image_uris: {
       small: 'small.jpeg',
       normal: 'normal.jpeg'
@@ -26,35 +26,101 @@ async function createCard () {
       grade: 'nm',
       price: 3.5
     }
-  })
+  }
+}
 
+async function createCard (id) {
+  const card = await Card.create(getCardData(id))
   return card
 }
 
-before(async () => {
+before(async function () {
   await mongoose.disconnect()
 
   mongoServer = await MongoMemoryServer.create()
   await mongoose.connect(mongoServer.getUri())
 })
 
-after(async () => {
+after(async function () {
   await mongoose.disconnect()
   await mongoServer.stop()
 })
 
-describe('Route tests', () => {
-  it('should create a card', async () => {
-    const card = await createCard()
+beforeEach(async function () {
+  await Card.deleteMany({}).exec()
+})
+
+describe('Route tests', function () {
+  it('should return all cards', async function () {
+    await createCard('01')
+    await createCard('02')
 
     await supertest(app)
       .get('/cards')
       .expect(200)
       .then((response) => {
         expect(response.body).to.be.an('array')
-        expect(response.body).to.have.lengthOf(1)
-        expect(response.body[0]._id).to.equal(card._id)
-        expect(response.body[0].name).to.equal(card.name)
+        expect(response.body).to.have.lengthOf(2)
+      })
+  })
+
+  it('should return a card', async function () {
+    const card = await createCard('01')
+
+    await supertest(app)
+      .get('/cards/01')
+      .expect(200)
+      .then((response) => {
+        expect(response.body).to.be.an('object')
+        expect(response.body).to.eql(card.toObject())
+      })
+  })
+
+  it('should insert cards', async function () {
+    const data = [
+      getCardData('01'),
+      getCardData('02')
+    ]
+
+    await supertest(app)
+      .post('/cards')
+      .send(data)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).to.be.an('array')
+        expect(response.body).to.have.lengthOf(2)
+      })
+  })
+
+  it('should update a card', async function () {
+    await createCard('01')
+
+    const data = {
+      meta: {
+        grade: 'ex',
+        price: 10
+      }
+    }
+
+    await supertest(app)
+      .patch('/cards/01')
+      .send(data)
+      .expect(200)
+      .then((response) => {
+        expect(response.body).to.be.an('object')
+        expect(response.body.meta).to.eql(data.meta)
+      })
+  })
+
+  it('should delete a card', async function () {
+    const card = await createCard('01')
+
+    await supertest(app)
+      .delete('/cards/01')
+      .expect(200)
+      .then((response) => {
+        expect(response.body).to.be.an('object')
+        expect(response.body).to.eql(card.toObject())
       })
   })
 })

@@ -9,7 +9,7 @@ async function getCard (id) {
 }
 
 async function insertCards (cards) {
-  return Card.insertMany(cards).exec()
+  return Card.insertMany(cards)
 }
 
 async function updateCard (id, card) {
